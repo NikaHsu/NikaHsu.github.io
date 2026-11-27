@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nika Hsu</title>
+<meta name="description" content="Chien-Liang (Nika) Hsu: AI engineer working on wire bonding predictive maintenance. Statistics M.S., Temple University exchange, research in multiple-instance learning for images.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+<style>
+/* VOICE personal site for an engineer: clean, exact, quietly confident
+   IDEA an equipment monitor readout: process traces, alert markers, the moment a model fires before the machine fails
+   PICTURE hero trace of a bond signal and an NSOP risk score crossing threshold 20 s before the event
+   COLOUR white ground, ink navy, cobalt from the beanie as the dominant field, amber for alerts, coral for failure
+   TYPE Archivo expanded for display (machine nameplate lettering), Archivo normal width for text
+   LAYOUT laptop: portrait left spanning name, intro and trace; phone: small portrait beside name, then intro, then trace */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#08112b);--ink:light-dark(#0b1636,#eaf0ff);--mute:light-dark(#4b5778,#a8b5d9);--line:light-dark(#dde3f1,#22305a);--tint:light-dark(#eef2ff,#0f1b40);--co:light-dark(#1f4fe0,#86a2ff);--deep:light-dark(#1a3fc4,#12308f);--amber:#f2a31b;--coral:light-dark(#e2453a,#ff6c5f)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.6 "Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:clip}
+img{max-width:100%;display:block}
+a{color:var(--co);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:4px}
+.band{padding-block:clamp(40px,6vw,88px);padding-left:max(5vw,16px,env(safe-area-inset-left,0px));padding-right:max(5vw,16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1240px;margin-inline:auto}
+h1,h2,h3{font-stretch:118%;letter-spacing:-.02em;line-height:1.05;text-wrap:balance;margin:0}
+h2{font-size:clamp(30px,3.6vw,46px);font-weight:750;max-width:20ch}
+h3{font-size:20px;font-weight:700;font-stretch:108%}
+p{margin:0}
+.lede{font-size:clamp(17px,1.5vw,19px);max-width:62ch;color:var(--mute)}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:4px 18px;padding:12px max(5vw,16px)}
+nav .me{font-weight:800;font-stretch:118%;color:var(--ink);text-decoration:none;margin-right:auto;font-size:17px}
+nav .links{display:flex;flex-wrap:wrap;gap:2px 4px}
+nav .links a{color:var(--ink);text-decoration:none;font-size:15px;padding:10px 10px;border-radius:6px}
+nav .links a:hover{background:var(--tint)}
+.hero{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);grid-template-areas:"photo name" "photo intro" "photo fig";gap:22px clamp(28px,4vw,56px);padding-top:clamp(28px,4vw,56px)}
+.photo{grid-area:photo;position:relative;display:block;width:100%;min-height:440px;padding:0;border:0;border-radius:6px;overflow:hidden;background:var(--tint);cursor:pointer}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos);opacity:0;transition:opacity .45s ease}
+.photo img.on{opacity:1}
+.dots{position:absolute;left:12px;bottom:12px;display:flex;gap:6px}
+.dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.5);box-shadow:0 0 0 1px rgba(0,0,0,.3)}
+.dots i.on{background:#fff}
+.name{grid-area:name;align-self:end}
+.name h1{font-size:clamp(46px,7.4vw,96px);font-weight:850;font-stretch:122%;letter-spacing:-.035em;line-height:.95}
+.intro{grid-area:intro;display:grid;gap:18px}
+.intro p{font-size:clamp(17px,1.55vw,20px);max-width:56ch}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid var(--co);color:var(--co);text-decoration:none;font-weight:650;font-size:15.5px;background:transparent;cursor:pointer;font-family:inherit}
+.btn.solid{background:var(--co);color:var(--bg)}
+.btn:hover{background:var(--tint)}.btn.solid:hover{background:color-mix(in srgb,var(--co) 86%,var(--ink))}
+.figbox{grid-area:fig;border:1px solid var(--line);border-radius:8px;padding:14px 14px 10px}
+.fig{position:relative;min-height:270px}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+svg text{paint-order:stroke;stroke:var(--bg);stroke-width:4px;font-family:"Archivo",sans-serif}
+.note{font-size:13.5px;color:var(--mute);margin-top:8px}
+.wb{background:var(--deep);color:#fff;margin-top:clamp(40px,6vw,80px)}
+.wb a{color:#fff}
+.wb .lede{color:rgba(255,255,255,.86)}
+.wb-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);margin-top:28px}
+.wb-text{display:grid;gap:18px;align-content:start}
+.wb-text p{max-width:62ch;color:rgba(255,255,255,.9)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(10em,1fr));gap:12px;margin-top:6px}
+.stat{border-top:2px solid rgba(255,255,255,.5);padding-top:10px}
+.stat b{display:block;font-size:clamp(48px,6vw,72px);font-weight:850;font-stretch:122%;line-height:1;letter-spacing:-.03em;white-space:nowrap}
+.stat span{font-size:15px;color:rgba(255,255,255,.85)}
+.bonds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-content:start}
+.bond{margin:0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:16px}
+.bond svg{width:100%;height:auto;display:block}
+.bond figcaption{font-size:15px;color:rgba(255,255,255,.86);margin-top:10px;line-height:1.45}
+.bond figcaption b{display:block;color:#fff;font-size:17px;margin-bottom:2px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(28px,5vw,72px);align-items:start;margin-top:28px}
+.stack-text{display:grid;gap:16px}
+.stack-text p{max-width:62ch}
+.tfigs{display:flex;flex-wrap:wrap;gap:8px 40px;border-top:1px solid var(--line);padding-top:16px;margin-top:4px}
+.tfigs b{display:block;font-size:clamp(32px,3.6vw,44px);font-weight:800;font-stretch:118%;line-height:1.05;white-space:nowrap}
+.tfigs span{font-size:14.5px;color:var(--mute)}
+.club{margin:0}
+.club img{width:100%;height:auto;border-radius:8px}
+.club figcaption{margin-top:12px;font-size:17px;font-weight:700;font-stretch:110%}
+.club figcaption span{display:block;font-weight:400;font-stretch:100%;font-size:15px;color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}
+.chips li{background:var(--tint);border-radius:999px;padding:6px 14px;font-size:15px;font-weight:600}
+.alt{background:var(--tint)}
+.mil{display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:center;gap:14px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:20px}
+.mil .step{display:grid;gap:8px;justify-items:start}
+.mil .cap{font-size:14px;color:var(--mute);line-height:1.35;max-width:16ch}
+.grid7{display:grid;grid-template-columns:repeat(7,18px);gap:3px}
+.grid7 i{width:18px;height:18px;border-radius:3px;background:var(--tint);border:1px solid var(--line)}
+.grid7 i.on{background:var(--ink);border-color:var(--ink)}
+.grid7 i.key{background:var(--co);border-color:var(--co)}
+.arrow{font-size:22px;color:var(--mute);text-align:center}
+.bars{display:grid;gap:6px;width:100%}
+.bar{display:grid;grid-template-columns:3.4em minmax(0,1fr) 2.6em;align-items:center;gap:8px;font-size:13.5px}
+.bar div{height:12px;border-radius:2px;background:var(--line)}
+.bar div i{display:block;height:100%;border-radius:2px;background:var(--mute)}
+.bar.top div i{background:var(--co)}
+.bar span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.mil .arrow.a2{display:none}
+.out{grid-column:1/-1;justify-self:stretch;border:2px solid var(--co);border-radius:8px;padding:12px 16px;text-align:center;font-weight:700}
+.out small{display:block;font-weight:500;color:var(--mute);font-size:13.5px}
+.rfigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(11em,1fr));gap:12px;margin-top:4px}
+.rfigs div{border-top:2px solid var(--co);padding-top:8px}
+.rfigs b{display:block;font-size:clamp(40px,4.6vw,56px);font-weight:850;font-stretch:120%;line-height:1;color:var(--co);white-space:nowrap}
+.rfigs span{font-size:15px;color:var(--mute)}
+.tl{margin-top:28px;display:grid;gap:0}
+.row{display:grid;grid-template-columns:minmax(9.5em,max-content) minmax(0,1fr);gap:8px clamp(20px,4vw,56px);padding:22px 0;border-top:1px solid var(--line)}
+.row .when{font-weight:700;font-stretch:110%;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--co)}
+.row h3{margin-bottom:2px}
+.row .where{color:var(--mute);font-size:15px;margin-bottom:8px}
+.row ul{margin:0;padding-left:1.1em;display:grid;gap:4px;max-width:70ch}
+.sub{margin-top:clamp(36px,5vw,56px);font-size:22px}
+.more{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17em),1fr));gap:0 clamp(20px,3vw,40px);margin-top:24px}
+.more article{border-top:1px solid var(--line);padding:20px 0;display:grid;gap:6px;align-content:start}
+.more p{color:var(--mute);font-size:15.5px}
+.contact{background:var(--deep);color:#fff}
+.contact .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end}
+.contact p{color:rgba(255,255,255,.86);max-width:52ch;margin-top:12px}
+.contact .mail{font-size:clamp(22px,3vw,34px);font-weight:750;font-stretch:112%;color:#fff;overflow-wrap:anywhere}
+.contact .cta{margin-top:18px}
+.contact .btn{border-color:#fff;color:#fff}
+.contact .btn.solid{background:#fff;color:#12308f}
+.contact .btn:hover{background:rgba(255,255,255,.12)}.contact .btn.solid:hover{background:#e6ecff}
+footer{background:var(--deep);color:rgba(255,255,255,.75);font-size:14px;border-top:1px solid rgba(255,255,255,.2)}
+footer .wrap{padding:18px max(5vw,16px)}
+@media(max-width:900px){.wb-grid,.two{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){
+.hero{grid-template-columns:minmax(0,1fr);grid-template-areas:"name" "photo" "intro" "fig";gap:16px}
+.photo{min-height:0;aspect-ratio:1/1;max-height:440px}
+.photo img{object-position:var(--mpos,var(--pos))}
+nav .me{display:none}
+nav .wrap{padding-block:2px;padding-inline:6px}
+nav .links{flex-wrap:nowrap;justify-content:space-between;width:100%;overflow-x:auto;scrollbar-width:none}
+nav .links::-webkit-scrollbar{display:none}
+nav .links a{flex:none;font-size:14px;font-stretch:85%;padding:12px 4px}
+.btn{padding:0 15px}
+header.band{padding-top:20px}
+.bonds{grid-template-columns:minmax(0,1fr)}
+.name h1{font-size:clamp(46px,14vw,64px)}
+.figbox{padding:10px 8px 8px}
+.fig{min-height:240px}
+.contact .wrap{grid-template-columns:minmax(0,1fr)}
+.row{grid-template-columns:minmax(0,1fr);padding:18px 0}
+.mil{grid-template-columns:minmax(0,1fr);justify-items:start}
+.trip .fig{min-height:160px}
+.mil .arrow{transform:rotate(90deg);justify-self:start;margin-left:40px}
+.mil .arrow.a2{display:block}
+}
+@media(max-width:350px){nav .links a{font-size:13px;padding:12px 2px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.photo img{transition:none}}
+</style>
+</head>
+<body>
+<nav aria-label="Sections"><div class="wrap">
+<a class="me" href="#top">Nika Hsu</a>
+<div class="links"><a href="#wire-bond">Wire bond</a><a href="#philadelphia">Philadelphia</a><a href="#research">Research</a><a href="#experience">Experience</a><a href="#contact">Contact</a></div>
+</div></nav>
+
+<header id="top" class="band" style="padding-bottom:0">
+<div class="wrap hero">
+<button class="photo" id="photo" type="button" aria-label="Show next photo of Nika (photo 1 of 2)" title="Next photo">
+<img class="on" src="photo-niagara.jpg" style="--pos:46% 50%" alt="Nika in a Temple University jacket jumping beside river rapids" width="720" height="900">
+<img src="photo-temple.jpg" style="--pos:54% 50%;--mpos:54% 58%" alt="Nika in a white haori at a Japanese temple" width="720" height="1080">
+<span class="dots" aria-hidden="true"><i class="on"></i><i></i></span>
+</button>
+<div class="name"><h1>Nika Hsu</h1></div>
+<div class="intro">
+<p>I'm Chien-Liang (Nika) Hsu, an AI engineer at Powertech Technology in Hsinchu, Taiwan. I build models that warn engineers before a wire bond fails. My background is statistics, from National Taipei University, with an exchange at Temple University in Philadelphia.</p>
+<div class="cta">
+<a class="btn solid" href="mailto:nikahsu11@gmail.com">Email me</a>
+<a class="btn" href="https://www.linkedin.com/in/chien-liang-hsu-5b391b25a">LinkedIn</a>
+<a class="btn" href="https://medium.com/@nikahsu11/using-multiple-linear-regression-and-xgboost-to-predict-the-nba-2024-playoff-teams-3ca654df316a">Medium</a>
+</div>
+</div>
+<figure class="figbox" style="margin:0">
+<div class="fig"><svg id="sig" role="img" aria-label="An NSOP risk score over 100 seconds that crosses its alert threshold at 60 seconds, 20 seconds before the NSOP failure at 80 seconds."></svg></div>
+<figcaption class="note">The idea in one picture: the alert fires 20 seconds before the failure. Illustration only, not production data.</figcaption>
+</figure>
+</div>
+</header>
+
+<section id="wire-bond" class="band wb">
+<div class="wrap">
+<h2>Warning engineers 20 seconds before a wire bond fails</h2>
+<div class="wb-grid">
+<div class="wb-text">
+<p class="lede">Wire bonding connects each chip to its package with gold or copper wire finer than a human hair. When a bond doesn't stick to its pad, a failure called NSOP (non-stick on pad), the machine stops and waits for an operator, costing throughput and sometimes yield.</p>
+<p>At Powertech I'm building a predictive model that flags these failures before they happen, so engineers can act before the machine stops instead of after.</p>
+<div class="stats">
+<div class="stat"><b>20 s</b><span>early warning before an anomaly occurs</span></div>
+<div class="stat"><b>46×</b><span>improvement in prediction performance</span></div>
+</div>
+</div>
+<div class="bonds">
+<figure class="bond"><svg viewBox="0 0 240 140" aria-hidden="true"><rect x="0" y="118" width="240" height="14" rx="2" fill="rgba(255,255,255,.18)"/><rect x="14" y="76" width="112" height="42" rx="2" fill="rgba(255,255,255,.26)"/><rect x="14" y="76" width="112" height="3" fill="rgba(255,255,255,.5)"/><rect x="36" y="72" width="34" height="5" rx="1" fill="#dfe6f5"/><rect x="166" y="106" width="64" height="12" rx="1" fill="#e3a25c"/><path d="M53 63 C 52 12, 150 4, 196 104" fill="none" stroke="#f6c94c" stroke-width="2.5"/><ellipse cx="53" cy="67" rx="11" ry="6" fill="#f6c94c"/><path d="M188 106 L206 106 L198 99 Z" fill="#f6c94c"/></svg><figcaption><b>Good bond</b>The ball welds to the pad and the wire loops down to the lead.</figcaption></figure>
+<figure class="bond"><svg viewBox="0 0 240 140" aria-hidden="true"><rect x="0" y="118" width="240" height="14" rx="2" fill="rgba(255,255,255,.18)"/><rect x="14" y="76" width="112" height="42" rx="2" fill="rgba(255,255,255,.26)"/><rect x="14" y="76" width="112" height="3" fill="rgba(255,255,255,.5)"/><rect x="36" y="72" width="34" height="5" rx="1" fill="#dfe6f5"/><rect x="166" y="106" width="64" height="12" rx="1" fill="#e3a25c"/><path d="M53 50 C 52 4, 150 0, 196 104" fill="none" stroke="#f6c94c" stroke-width="2.5"/><ellipse cx="53" cy="55" rx="11" ry="6" fill="#f6c94c"/><path d="M188 106 L206 106 L198 99 Z" fill="#f6c94c"/><circle cx="53" cy="65" r="20" fill="none" stroke="#ff7b70" stroke-width="2.5" stroke-dasharray="5 4"/></svg><figcaption><b>NSOP</b>The ball doesn't stick to the pad, and the bonder stops.</figcaption></figure>
+</div>
+</div>
+</div>
+</section>
+
+<section id="philadelphia" class="band">
+<div class="wrap">
+<h2>An exchange at Temple University in Philadelphia</h2>
+<div class="two">
+<div class="stack-text">
+<p class="lede">As part of my M.S. in Statistics at National Taipei University, I joined Temple University's exchange program in Philadelphia, Pennsylvania.</p>
+<p>I took Time Series and Database Management Systems there. Both became everyday tools afterwards: time series for reading machine signals at Powertech, and databases for the SAP warehouse and ETL pipelines behind 10M+ production records at YoungOptics.</p>
+<p>Outside class, I was part of the Temple Data Science Club.</p>
+<ul class="chips" aria-label="Courses at Temple"><li>Time Series</li><li>Database Management Systems</li></ul>
+<div class="tfigs">
+<div><b id="km">12,580 km</b><span>Taipei to Philadelphia, great-circle</span></div>
+<div><b>12–13 h</b><span>time difference, by season</span></div>
+</div>
+</div>
+<figure class="club">
+<img src="temple-dsc.jpg" alt="Group photo of Temple Data Science Club members in a meeting room" width="1179" height="886">
+<figcaption>Temple Data Science Club<span>Temple University, Philadelphia</span></figcaption>
+</figure>
+</div>
+</div>
+</section>
+
+<section id="research" class="band alt">
+<div class="wrap">
+<h2>Finding what matters inside an image when only the whole image is labeled</h2>
+<div class="two" style="margin-top:28px">
+<div class="stack-text">
+<p class="lede">My master's thesis, <a href="https://drive.google.com/file/d/1tkACZW9vDjUSVEhwppiSFmDSyoi7QJd9/view?usp=sharing">Convolutional MIL for Image Feature Extraction</a>, works on multiple-instance learning (MIL).</p>
+<p>In MIL an image is treated as a bag of patches. Labels exist only for the whole bag, so the model has to work out which patches carry the signal. I developed CMILR, a model that combines a convolutional neural network with regression, and derived its mathematical framework.</p>
+<p>CMILR reached 98% classification accuracy on simulated data and on handwritten digits. Applied to COVID-19 data, it identified two potential features and gave medically actionable insights.</p>
+<div class="rfigs">
+<div><b>98%</b><span>accuracy on simulated and handwritten-digit data</span></div>
+<div><b>2</b><span>potential COVID-19 features identified</span></div>
+</div>
+</div>
+<div>
+<div class="mil" aria-label="Schematic of multiple-instance learning">
+<div class="step"><div class="grid7" id="g7" aria-hidden="true"></div><span class="cap">Image split into patches, one label for the whole image</span></div>
+<div class="arrow" aria-hidden="true">→</div>
+<div class="step"><div class="bars" id="bars"></div><span class="cap">CNN scores each patch</span></div>
+<div class="arrow a2" aria-hidden="true">→</div>
+<div class="out">Image label<small>regression over patch scores</small></div>
+</div>
+<p class="note">Schematic. Highlighted patches are the ones that drive the image-level prediction.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="experience" class="band">
+<div class="wrap">
+<h2>Experience</h2>
+<div class="tl">
+<div class="row"><div class="when">Jul 2025 – Present</div><div><h3>AI Engineer, Powertech Technology Inc.</h3><div class="where">Hsinchu County</div><ul><li>Wire bonding equipment predictive maintenance.</li><li>Early anomaly detection 20 seconds ahead of occurrence, improving prediction performance 46-fold.</li></ul></div></div>
+<div class="row"><div class="when">Jul 2025 – Jul 2026</div><div><h3>Data Scientist, YoungOptics</h3><div class="where">Hsinchu City</div><ul><li>Managed SAP data warehousing and orchestrated ETL processes for 10M+ production records.</li><li>Designed and deployed 10+ interactive dashboards in SAP Analytics Cloud.</li><li>Trainer for robotic process automation with UiPath.</li></ul></div></div>
+<div class="row"><div class="when">Jun 2023 – Nov 2023</div><div><h3>Data Analyst Intern, Wistron ITS</h3><div class="where">New Taipei City</div><ul><li>Built a chatbot on an LLM API that helps diabetes patients manage blood sugar.</li><li>Designed the backend logic that routes each conversation based on its flow.</li></ul></div></div>
+</div>
+<h3 class="sub">Education</h3>
+<div class="tl" style="margin-top:12px">
+<div class="row"><div class="when">Feb 2025</div><div><h3>M.S. Statistics, National Taipei University</h3><div class="where">Machine learning, NLP, SQL, statistical computing, Python, R</div></div></div>
+<div class="row"><div class="when">Feb 2025</div><div><h3>Exchange program, Temple University</h3><div class="where">Philadelphia, PA. Time series, database management systems</div></div></div>
+<div class="row"><div class="when">Jun 2022</div><div><h3>B.S. Statistics, Tamkang University</h3><div class="where">Regression, categorical analysis, probability theory, survival analysis</div></div></div>
+</div>
+<h3 class="sub">Projects, writing and awards</h3>
+<div class="more">
+<article><h3><a href="https://medium.com/@nikahsu11/using-multiple-linear-regression-and-xgboost-to-predict-the-nba-2024-playoff-teams-3ca654df316a">NBA 2024 playoff predictions</a></h3><p>Regression and XGBoost model that identified all 2024 NBA playoff teams. Narrowed 45 candidate factors to the 5 that most affect win rate.</p></article>
+<article><h3><a href="https://drive.google.com/file/d/1K6rnWyjjFaOqEx66tAXCr_KjAVcgxMyk/view?usp=sharing">Applications of Python in Statistical Analysis &amp; ML</a></h3><p>A book I wrote introducing core machine learning and statistical models, comparing classifiers on simulated data.</p></article>
+<article><h3>SinoPac Bank Business Competition, 2nd place</h3><p>SinoPac × SHOPLINE loan solution built on deep learning.</p></article>
+<article><h3>Certifications</h3><p>Google Analytics Individual Qualification, <a href="https://www.coursera.org/account/accomplishments/verify/3D9DE5BXVSPW">Building Data Lakes on AWS</a>, <a href="https://www.coursera.org/account/accomplishments/verify/FDG7GL92LHTN">Fundamentals of Visualization with Tableau</a>.</p></article>
+<article><h3>Toolkit</h3><p>Python, R, SQL, XGBoost, SAP Analytics Cloud, UiPath, AWS, Tableau, LLM APIs.</p></article>
+<article><h3>Off the clock</h3><p>Played on the National Taipei University basketball team. Currently learning Japanese.</p></article>
+</div>
+</div>
+</section>
+
+<section id="contact" class="band contact">
+<div class="wrap">
+<div>
+<h2>Get in touch</h2>
+<p>Open to conversations about predictive maintenance, manufacturing data and applied machine learning.</p>
+</div>
+<div>
+<div class="mail" id="mail">nikahsu11@gmail.com</div>
+<div class="cta">
+<button class="btn solid" id="copy" type="button">Copy email</button>
+<a class="btn" href="https://www.linkedin.com/in/chien-liang-hsu-5b391b25a">LinkedIn</a>
+</div>
+</div>
+</div>
+</section>
+<footer><div class="wrap">© 2026 Chien-Liang (Nika) Hsu</div></footer>
+
+<script>
+{
+const NS='http://www.w3.org/2000/svg';
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+/* hero trace */
+const s=document.getElementById('sig');
+let seed=11;const rnd=()=>(seed=seed*16807%2147483647)/2147483647;
+const EV=80,THR=0.5,END=100;const data=[];
+for(let t=0;t<=EV;t+=0.5){let r=1/(1+Math.exp(-(t-60)/3.2));if(t<45)r+=0.012+rnd()*0.02;data.push({t,risk:Math.min(0.97,r)})}
+const tA=data.find(d=>d.risk>=THR).t;const lead=EV-tA;
+let p=1;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const drawSig=()=>{
+const W=s.clientWidth,H=s.clientHeight;if(!W||!H)return;const nar=W<520;
+const m={l:6,r:6,t:30,b:26},lh=H-m.t-m.b,bot=m.t+lh;
+const x=t=>m.l+t/END*(W-m.l-m.r);const y=v=>m.t+(1-v)*lh;
+const line=data.map((d,i)=>(i?'L':'M')+x(d.t).toFixed(1)+' '+y(d.risk).toFixed(1)).join('');
+const xa=x(tA),xe=x(EV);
+const ticks=nar?[0,40,80]:[0,20,40,60,80,100];
+s.innerHTML=`<defs><clipPath id="cl"><rect id="clr" x="0" y="0" height="${H}" width="${x(p*END)}"/></clipPath></defs>
+<line x1="${m.l}" x2="${W-m.r}" y1="${bot}" y2="${bot}" stroke="var(--line)"/>
+${ticks.map(t=>`<text x="${x(t)}" y="${H-6}" font-size="13" fill="var(--mute)" text-anchor="${t===0?'start':t===END?'end':'middle'}">${t}${t===END||(nar&&t===80)?' s':''}</text>`).join('')}
+<g clip-path="url(#cl)">
+<rect x="${xe}" y="${m.t-4}" width="${x(END)-xe}" height="${lh+4}" fill="var(--coral)" opacity=".09"/>
+<rect x="${xa}" y="${m.t-4}" width="${xe-xa}" height="${lh+4}" fill="var(--amber)" opacity=".16"/>
+<line x1="${m.l}" x2="${W-m.r}" y1="${y(THR)}" y2="${y(THR)}" stroke="var(--mute)" stroke-dasharray="4 4"/>
+<path d="${line}L${xe} ${bot}L${m.l} ${bot}Z" fill="var(--co)" opacity=".1"/>
+<path d="${line}" fill="none" stroke="var(--co)" stroke-width="2.8" stroke-linejoin="round"/>
+<line x1="${xa}" x2="${xa}" y1="${m.t-8}" y2="${bot}" stroke="var(--amber)" stroke-width="2.5"/>
+<line x1="${xe}" x2="${xe}" y1="${m.t-8}" y2="${bot}" stroke="var(--coral)" stroke-width="2.5"/>
+<circle cx="${xa}" cy="${y(THR)}" r="5.5" fill="var(--amber)"/>
+<text x="${xa-6}" y="${m.t-12}" font-size="14" font-weight="700" fill="var(--ink)" text-anchor="end">${nar?'Alert':'Model alert'}</text>
+<text x="${(xa+xe)/2}" y="${m.t-12}" font-size="14" font-weight="700" fill="var(--ink)" text-anchor="middle">${lead} s</text>
+<text x="${xe+6}" y="${m.t-12}" font-size="14" font-weight="700" fill="var(--coral)">NSOP</text>
+<text x="${(xe+x(END))/2}" y="${m.t+lh*0.82}" font-size="13" fill="var(--mute)" text-anchor="middle">${nar?'Stop':'Machine stop'}</text>
+</g>
+<text x="${m.l+2}" y="${m.t+15}" font-size="14" font-weight="600" fill="var(--co)">NSOP risk score</text>
+<text x="${m.l+2}" y="${y(THR)-7}" font-size="13" fill="var(--mute)">Threshold</text>
+${p<1?`<line id="cur" x1="${x(p*END)}" x2="${x(p*END)}" y1="${m.t-4}" y2="${bot}" stroke="var(--co)" stroke-opacity=".5"/>`:''}`;
+};
+const roS=new ResizeObserver(drawSig);roS.observe(s);
+if(!reduce){p=0;const t0=performance.now(),dur=4200;const step=now=>{p=Math.min(1,(now-t0)/dur);const W=s.clientWidth;const r=document.getElementById('clr'),c=document.getElementById('cur');const xx=6+p*(W-12);if(r)r.setAttribute('width',xx);if(c&&p<1){c.setAttribute('x1',xx);c.setAttribute('x2',xx)}if(p<1)requestAnimationFrame(step);else drawSig()};requestAnimationFrame(step)}
+/* distance */
+const R=6371,rad=d=>d*Math.PI/180,A=[25.033,121.565],B=[39.953,-75.165];
+const h=Math.sin(rad(B[0]-A[0])/2)**2+Math.cos(rad(A[0]))*Math.cos(rad(B[0]))*Math.sin(rad(B[1]-A[1])/2)**2;
+document.getElementById('km').textContent=(Math.round(2*R*Math.asin(Math.sqrt(h))/10)*10).toLocaleString('en-US')+' km';
+/* photo switcher */
+const ph=document.getElementById('photo');const imgs=[...ph.querySelectorAll('img')];const dots=[...ph.querySelectorAll('.dots i')];let cur=0;
+ph.addEventListener('click',()=>{cur=(cur+1)%imgs.length;imgs.forEach((im,i)=>im.classList.toggle('on',i===cur));dots.forEach((d,i)=>d.classList.toggle('on',i===cur));ph.setAttribute('aria-label',`Show next photo of Nika (photo ${cur+1} of ${imgs.length})`)});
+/* MIL schematic */
+const seven=['0111110','0000010','0000100','0001000','0001000','0010000','0010000'];
+const keys=new Set(['0-5','1-5','2-4']);
+document.getElementById('g7').innerHTML=seven.map((r,i)=>[...r].map((c,j)=>`<i class="${keys.has(i+'-'+j)?'key':c==='1'?'on':''}"></i>`).join('')).join('');
+const sc=[['P06',0.94],['P13',0.88],['P19',0.71],['P25',0.32],['P40',0.12]];
+document.getElementById('bars').innerHTML=sc.map(([n,v],i)=>`<div class="bar${i<3?' top':''}"><span>${n}</span><div><i style="width:${v*100}%"></i></div><span>${v.toFixed(2)}</span></div>`).join('');
+/* copy email */
+const btn=document.getElementById('copy');
+btn.addEventListener('click',async()=>{const addr=document.getElementById('mail').textContent;try{await navigator.clipboard.writeText(addr);btn.textContent='Copied'}catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById('mail'));const sl=getSelection();sl.removeAllRanges();sl.addRange(r);btn.textContent='Selected, press Ctrl+C'}setTimeout(()=>btn.textContent='Copy email',2200)});
+}
+</script>
+</body>
+</html>
